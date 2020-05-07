@@ -24,7 +24,7 @@
   border: 2px solid #aaa;
 }
 .check {
-  background-color: #ff5777;
-  border-color: #ff5777;
+  border-color: var(--color-tint);
+  background-color: var(--color-tint);
 }
 </style>

@@ -13,7 +13,7 @@
       合计：{{total}}
     </div>
     <div class="calculate">
-      去结算： {{checkLength}}
+      <van-button round type="info" size="small" color="var(--color-tint)">去结算： {{checkLength}}</van-button>
     </div>
   </div>
 </template>
@@ -56,7 +56,7 @@
 <style scoped>
 .bottom-bar {
   height: 40px;
-  background-color: #ccc;
+  background-color: #f6f6f6;
   display: flex;
   justify-content: space-between;
   align-items: center;

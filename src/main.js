@@ -2,13 +2,16 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 //导入vant插件的banner组件及样式
-import { Swipe, SwipeItem, Toast, Stepper, SwipeCell,Icon, Empty } from 'vant';
+import { Swipe, SwipeItem, Toast, Stepper, SwipeCell,Icon, Empty, Skeleton, Loading, Button} from 'vant';
 import 'vant/lib/index.css'
 
 //导入store
 import store from './store/index'
 
 import * as filters from './filters'
+
+//导入图片懒加载
+import VueLazyload from "vue-lazyload";
 
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
@@ -21,11 +24,13 @@ Vue.use(Stepper)
 Vue.use(SwipeCell)
 Vue.use(Icon)
 Vue.use(Empty)
-
-import { Button } from 'vant';
-import dayjs from 'dayjs'
-
+Vue.use(Skeleton);
+Vue.use(Loading);
 Vue.use(Button);
+
+Vue.use(VueLazyload)
+
+import dayjs from 'dayjs'
 
 Vue.config.productionTip = false;
 

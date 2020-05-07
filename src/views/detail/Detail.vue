@@ -7,35 +7,40 @@
       </detail-nav-bar>
 
       <scroll class="content" ref="scrollName" :probeType="3" @scroll="scrollContent">
-        <!-- 轮播图 -->
-        <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
-          <van-swipe-item v-for="item in topImage" :key="item.index">
-            <img :src="item" alt="" width="100%">
-          </van-swipe-item>
-        </van-swipe>
+        <template v-if="loading===false">
+          <!-- 轮播图 -->
+          <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
+            <van-swipe-item v-for="item in topImage" :key="item.index">
+              <img :src="item" alt="" width="100%">
+            </van-swipe-item>
+          </van-swipe>
 
-        <!-- 商品基本信息 -->
-        <detail-base-info :goods="goods"></detail-base-info>
+          <!-- 商品基本信息 -->
+          <detail-base-info :goods="goods"></detail-base-info>
 
-        <!-- 商家基本信息     -->
-        <detail-shopper :shop="shop"></detail-shopper>
+          <!-- 商家基本信息     -->
+          <detail-shopper :shop="shop"></detail-shopper>
 
-        <!--商品详情-->
-        <detail-goods-info :detailInfo="detailInfo" @imageLoad="imageLoad"></detail-goods-info>
+          <!--商品详情-->
+          <detail-goods-info :detailInfo="detailInfo" @imageLoad="imageLoad"></detail-goods-info>
 
-        <!-- 商品参数-->
-        <detail-param-info :paramInfo="paramInfo" ref="param"></detail-param-info>
+          <!-- 商品参数-->
+          <detail-param-info :paramInfo="paramInfo" ref="param"></detail-param-info>
 
-        <!-- 商品评论 -->
-        <detail-comment :comment="comment" ref="comment"></detail-comment>
+          <!-- 商品评论 -->
+          <detail-comment :comment="comment" ref="comment"></detail-comment>
 
-        <!-- 商品推荐 -->
-        <goods-list :goods="recommends" ref="recommend" goods-id-name="item_id"></goods-list>
+          <!-- 商品推荐 -->
+          <goods-list :goods="recommends" ref="recommend" goods-id-name="item_id"></goods-list>
+        </template>
+        <div v-else class="load">
+          <van-loading color="#1989fa" size="24px" vertical>加载中...</van-loading>
+        </div>
+
       </scroll>
 
       <!-- 底部导航 -->
       <detail-bottom-bar @addCart="addToCart"></detail-bottom-bar>
-
     </div>
 </template>
 
@@ -97,6 +102,7 @@
           themeTopYs: [],
           getThemeTopY: null,
           currentIndex: 0,
+          loading: true
         }
     },
     watch: {
@@ -119,6 +125,8 @@
 
         //  根据传入的id，请求详情页数据
         getDetail(this.iid).then(res => {
+          this.loading = false // 数据请求成功
+
           // console.log(res)
           this.topImage = res.result.itemInfo.topImages.slice(0, 5)
 
@@ -145,7 +153,6 @@
             this.themeTopYs.push(Number.MAX_VALUE)
             console.log(this.themeTopYs)
           },200)
-
         });
 
         // 获取推荐数据
@@ -236,4 +243,9 @@
   height: calc(100% - 44px - 58px);
   overflow: hidden;
 }
+  .load {
+    margin-top: 50%;
+    margin-left: 50%;
+    transform: translate(-50%, -50%);
+  }
 </style>
