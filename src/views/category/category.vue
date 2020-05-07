@@ -10,8 +10,8 @@
         @selectItem="selectItem">
       </tab-menu>
 
-      <scroll class="tab-content">
-        <tab-content :sub="showSubCategory"></tab-content>
+      <scroll class="tab-content" ref="scrollName">
+        <tab-content :sub="showSubCategory" @imgLoad="imageLoad"></tab-content>
       </scroll>
     </div>
   </div>
@@ -107,8 +107,12 @@
         },
         selectItem(index) {
           this._getSubCategory(index)
+        },
+        imageLoad() {
+          this.$refs.scrollName.refreshMethods()
         }
-      }
+      },
+
     }
 </script>
 

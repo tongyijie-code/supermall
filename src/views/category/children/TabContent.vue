@@ -1,7 +1,7 @@
 <template>
       <div class="content">
         <div v-for="good in sub.list" class="item">
-          <img :src="good.image" alt="" class="item-image">
+          <img :src="good.image" alt="" class="item-image" @load="imgLoad">
           <p class="title">{{good.title}}</p>
         </div>
         <div class="item"></div>
@@ -23,6 +23,11 @@
           default(){
             return {}
           }
+        }
+      },
+      methods: {
+        imgLoad() {
+          this.$emit('imgLoad')
         }
       }
     }
