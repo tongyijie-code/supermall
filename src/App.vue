@@ -1,28 +1,34 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <main-tab-bar class="main-bar"/>
+
+    <keep-alive exclude="Detail">
+      <router-view></router-view>
+    </keep-alive>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import MainTabBar from "components/common/mainTabbar/MainTabBar";
+import NavBar from "components/common/navbar/NavBar";
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+      NavBar,
+      MainTabBar
   }
 }
 </script>
 
 <style>
+@import "assets/css/base.css";
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  max-width: 500px;
+  margin: 0 auto;
 }
+ .main-bar {
+   z-index: 9;
+
+ }
 </style>
