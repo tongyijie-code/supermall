@@ -37,11 +37,10 @@
 <style scoped>
  .goods-dec {
    padding: 3px 8px;
+   border-bottom: 5px solid #f2f5f8;
  }
 .title {
   padding: 10px 0;
-
-
 }
 .n-price {
   font-size: 20px;
@@ -73,7 +72,6 @@
  }
   .address {
     margin-top: 5px;
-    box-shadow: 0 2px 4px -3px #666666;
     height: 60px;
     line-height: 50px;
     display: flex;
@@ -84,6 +82,6 @@
    width: 15px;
    height: 15px;
    vertical-align: middle;
-   margin-top: -2px;
+   margin: -2px 3px 0 0;
  }
 </style>
