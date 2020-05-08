@@ -5,16 +5,34 @@
     </nav-bar>
 
     <div class="content">
-      <tab-menu
-        :category="category"
-        @selectItem="selectItem">
-      </tab-menu>
+      <div class="menu">
+        <tab-menu
+          :category="category"
+          @selectItem="selectItem">
+        </tab-menu>
+      </div>
+      <div class="scroll-box">
+        <tab-control
+          v-show="isTabFixed"
+          class="isFixed"
+          :titles="['流行', '新款', '热卖']"
+          @tabClick="typeClick"
+          ref="tabControlCopy">
+        </tab-control>
+        <scroll class="tab-content" ref="scrollName" :probe-type="3" @scroll="categoryScroll">
+          <template v-if="!loading">
+            <tab-content :sub="showSubCategory" @imgLoad="imageLoad"></tab-content>
+            <tab-control
+              :titles="['流行', '新款', '热卖']"
+              @tabClick="typeClick"
+              ref="tabControl">
+            </tab-control>
+            <tab-content-detail :category-detail="showCategoryDetail"></tab-content-detail>
+          </template>
 
-      <scroll class="tab-content" ref="scrollName">
-        <tab-content :sub="showSubCategory" @imgLoad="imageLoad"></tab-content>
-        <tab-control :titles="['流行', '新款', '热卖']" @tabClick="tabClick"></tab-control>
-        <tab-content-detail :category-detail="showCategoryDetail"></tab-content-detail>
-      </scroll>
+          <van-loading v-else size="24px">加载中...</van-loading>
+        </scroll>
+      </div>
     </div>
   </div>
 </template>
@@ -28,6 +46,7 @@
     import TabControl from "../../components/content/tabcontrol/TabControl";
     import {debounce} from "../../common/utils";
     import TabContentDetail from "./children/TabContentDetail";
+    import {itemListenerMixin} from "common/mixin"
 
     export default {
       name: "category",
@@ -44,8 +63,14 @@
             category: [],
             categoryDate: {},
             currentIndex: -1,
-            currentType: 'pop'
+            currentType: 'pop',
+            tabY: 0,
+            isTabFixed: false,
+            loading: true
           }
+      },
+      mixins: {
+        itemListenerMixin
       },
       created() {
         this._getCategory()
@@ -59,10 +84,9 @@
           return this.categoryDate[this.currentIndex].subCategory
         },
         showCategoryDetail() {
-          if (this.currentIndex === -1) return {}
+          if (this.currentIndex === -1) return []
           return this.categoryDate[this.currentIndex].categoryDetail[this.currentType]
-          console.log('--========')
-          console.log(this.categoryDate[this.currentIndex].categoryDetail[this.currentType])
+
         }
       },
       methods: {
@@ -87,25 +111,28 @@
                 }
               }
 
-              this._getSubCategory(0)
+              // this._getSubCategory(0)
+              // this._getCategoryDetail('pop')
+              // this._getCategoryDetail('new')
+              // this._getCategoryDetail('sell')
+
+              this.requestSubCategoryAndDetail(0)
             })
         },
         /**
          * 获取子分类
          */
         _getSubCategory(index) {
-          this.currentIndex = index
-          const maitKey = this.category[index].maitKey
+          return new Promise((resolve) => {
+            this.currentIndex = index
+            const maitKey = this.category[index].maitKey
 
-          getSubCategory(maitKey).then(res => {
-            console.log('----')
-            this.categoryDate[index].subCategory = res.data
-            //里面是每一类的数据
-            this.categoryDate = { ...this.categoryDate }
-            console.log(this.categoryDate[index])
-            this._getCategoryDetail('pop')
-            this._getCategoryDetail('new')
-            this._getCategoryDetail('sell')
+            getSubCategory(maitKey).then(res => {
+              resolve(res)
+              this.categoryDate[index].subCategory = res.data
+              //里面是每一类的数据
+              this.categoryDate = { ...this.categoryDate }
+            })
           })
         },
         /**
@@ -114,15 +141,34 @@
          * @private
          */
         _getCategoryDetail(type) {
-          const miniWallkey = this.category[this.currentIndex].miniWallkey
-          getCategoryDetail(miniWallkey, type).then(res => {
-            console.log(res)
-            this.categoryDate[this.currentIndex].categoryDetail[type] = res
-            this.categoryDate = {...this.categoryDate}
+          return new Promise((resolve) => {
+            const miniWallkey = this.category[this.currentIndex].miniWallkey
+
+            getCategoryDetail(miniWallkey, type).then(res => {
+              resolve(res)
+              this.categoryDate[this.currentIndex].categoryDetail[type] = res
+              this.categoryDate = {...this.categoryDate}
+            })
           })
         },
         selectItem(index) {
-          this._getSubCategory(index)
+          // this._getSubCategory(index)
+          // this._getCategoryDetail('pop')
+          // this._getCategoryDetail('new')
+          // this._getCategoryDetail('sell')
+
+          this.requestSubCategoryAndDetail(index)
+        },
+        /**
+         * 请求子分类和分类详情
+         * @param index
+         */
+        requestSubCategoryAndDetail(index) {
+          this.loading = true
+
+          Promise.all([this._getSubCategory(index), this._getCategoryDetail('pop'), this._getCategoryDetail('new'), this._getCategoryDetail('sell')]).then((res) => {
+            this.loading = false
+          })
         },
         imageLoad() {
           debounce(this.$refs.scrollName.refreshMethods(), 500)
@@ -140,7 +186,27 @@
                   break
           }
 
-        }
+        },
+        categoryScroll(position) {
+          this.tabY = this.$refs.tabControl.$el.offsetTop
+          this.isTabFixed = -position.y >= this.tabY;
+        },
+        //点击tab栏同步
+        typeClick(index) {
+          switch (index) {
+            case 0:
+              this.currentType = 'pop';
+              break;
+            case 1:
+              this.currentType = 'new';
+              break;
+            case 2:
+              this.currentType = 'sell';
+              break;
+          }
+          this.$refs.tabControl.currentIndex = index;
+          this.$refs.tabControlCopy.currentIndex = index;
+        },
       },
 
     }
@@ -158,10 +224,18 @@
     height: calc(100% - 44px - 49px);
     display: flex;
   }
+  .scroll-box {
+    position: relative;
+  }
   .tab-content {
     height: 100%;
-    /*background-color: #fccccc;*/
-    flex: 1;
     overflow: hidden;
+  }
+  .isFixed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
   }
 </style>

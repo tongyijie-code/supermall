@@ -1,6 +1,5 @@
 <template>
     <div class="goods">
-      <slot name="top"></slot>
       <goods-list-item
         v-for="item in goods"
         :key="item.index"

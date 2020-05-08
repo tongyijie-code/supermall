@@ -47,7 +47,7 @@ tr td {
 }
   tr td:nth-child(1) {
     padding: 0 15px;
-    width: 80px;
+    width: 100px;
     margin-right: 15px;
   }
 </style>
