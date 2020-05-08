@@ -37,15 +37,17 @@
 
 <style scoped>
   .user-content{
-    padding: 10px 10px;
-    /*margin-bottom: 10px;*/
+    padding: 5px 8px;
+    border-bottom: 5px solid #f2f5f8;
+    margin-bottom: 10px;
   }
 .head {
-  box-shadow: 0 2px 2px -2px rgba(0,0,0,0.5),
-              0 -2px 2px -2px rgba(0,0,0,0.5);
+  box-shadow: 0 2px 2px -2px rgba(0,0,0,0.5);
+              /*0 -2px 2px -2px rgba(0,0,0,0.5);*/
   margin: 3px 5px;
-  height: 60px;
-  line-height: 60px;
+  height: 50px;
+  line-height: 50px;
+  font-size: 15px;
 
 }
   .comment {

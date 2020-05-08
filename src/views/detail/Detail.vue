@@ -31,7 +31,8 @@
           <detail-comment :comment="comment" ref="comment"></detail-comment>
 
           <!-- 商品推荐 -->
-          <goods-list :goods="recommends" ref="recommend" goods-id-name="item_id"></goods-list>
+          <goods-list :goods="recommends" ref="recommend" goods-id-name="item_id">
+          </goods-list>
         </template>
         <div v-else class="load">
           <van-loading color="#1989fa" size="24px" vertical>加载中...</van-loading>

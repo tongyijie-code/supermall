@@ -1,7 +1,6 @@
 <template>
   <div v-if="Object.keys(detailInfo).length>0" class="info">
 <!--    描述-->
-    {{detailInfo}}
     <div class="info-desc">
       <div class="start"></div>
       <div class="desc">
@@ -34,28 +33,40 @@
             imgLength: 0,
           }
       },
-      methods: {
-          imgLoad() {
-            if (++this.counter === this.imgLength) {
-              this.$emit('imageLoad')
-            }
+      computed: {
+          detailInfoLength() {
+            return this.imgLength = this.detailInfo.detailImage[0].list.length
           }
       },
-      watch: {
-        detailInfo: {
-          immediate: true,
-          handler() {
-            this.imgLength = this.detailInfo.detailImage[0].list.length
+      methods: {
+        imgLoad() {
+          console.log(this.imgLength)
+          if (++this.counter === this.detailInfoLength) {
+            this.$emit('imageLoad')
           }
         }
-      }
+      },
+      // imgLoad() {
+      //   console.log(this.imgLength)
+      //   if (++this.counter === this.imgLength) {
+      //     this.$emit('imageLoad')
+      //   }
+      // }
+      // watch: {
+      //   detailInfo: {
+      //     immediate: true,
+      //     handler() {
+      //       this.imgLength = this.detailInfo.detailImage[0].list.length
+      //     }
+      //   }
+      // }
     }
 </script>
 
 <style scoped>
   .info {
-    margin-top: 10px;
     text-align: center;
+    border-bottom: 5px solid #f2f5f8;
   }
 .info-image img{
   width: 98%;

@@ -33,9 +33,9 @@
 
 <style scoped>
 .detail-param {
-  margin-top: 5px;
   padding: 0 5px;
   font-size: 14px;
+  border-bottom: 5px solid #f2f5f8;
 }
 tr {
   border: 1px solid #ccc;

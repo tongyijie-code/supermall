@@ -1,5 +1,6 @@
 <template>
     <div class="goods">
+      <slot name="top"></slot>
       <goods-list-item
         v-for="item in goods"
         :key="item.index"
@@ -38,7 +39,5 @@
   justify-content: space-evenly;
 
 }
-goods-list-item {
 
-}
 </style>
