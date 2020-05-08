@@ -70,7 +70,7 @@
 
   //导入混入
   import {itemListenerMixin} from "common/mixin"
-  import {debounce} from "../../common/utils";
+  import {debounce} from "@/common/utils";
 
 
   export default {
@@ -118,6 +118,7 @@
       // console.log('-----detail------')
       this.$bus.$off('itemImageLoad',this.itemImageListener)
     },
+
     methods: {
       init() {
         //1.保存传入的id
@@ -144,7 +145,9 @@
             this.comment = date.rate.list[0]
           }
 
+          console.log('debounce上面')
           this.getThemeTopY = debounce(() => {
+            console.log('success')
             this.themeTopYs = [];
             this.themeTopYs.push(0);
             this.themeTopYs.push(this.$refs.param.$el.offsetTop);
@@ -154,7 +157,7 @@
             console.log(this.themeTopYs)
           },200)
         });
-
+        // console.log('success')
         // 获取推荐数据
         getRecommend().then(res => {
           this.recommends = res.data.list

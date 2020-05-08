@@ -12,6 +12,8 @@
 
       <scroll class="tab-content" ref="scrollName">
         <tab-content :sub="showSubCategory" @imgLoad="imageLoad"></tab-content>
+        <tab-control :titles="['流行', '新款', '热卖']" @tabClick="tabClick"></tab-control>
+        <tab-content-detail :category-detail="showCategoryDetail"></tab-content-detail>
       </scroll>
     </div>
   </div>
@@ -23,6 +25,9 @@
     import Scroll from "../../components/common/scroll/Scroll";
     import { getCategory, getSubCategory, getCategoryDetail} from "@/network/category"
     import TabContent from "./children/TabContent"
+    import TabControl from "../../components/content/tabcontrol/TabControl";
+    import {debounce} from "../../common/utils";
+    import TabContentDetail from "./children/TabContentDetail";
 
     export default {
       name: "category",
@@ -30,13 +35,16 @@
         NavBar,
         TabMenu,
         Scroll,
-        TabContent
+        TabContent,
+        TabControl,
+        TabContentDetail
       },
       data() {
           return {
             category: [],
             categoryDate: {},
-            currentIndex: -1
+            currentIndex: -1,
+            currentType: 'pop'
           }
       },
       created() {
@@ -49,6 +57,12 @@
         showSubCategory() {
           if (this.currentIndex === -1) return {}
           return this.categoryDate[this.currentIndex].subCategory
+        },
+        showCategoryDetail() {
+          if (this.currentIndex === -1) return {}
+          return this.categoryDate[this.currentIndex].categoryDetail[this.currentType]
+          console.log('--========')
+          console.log(this.categoryDate[this.currentIndex].categoryDetail[this.currentType])
         }
       },
       methods: {
@@ -89,8 +103,9 @@
             //里面是每一类的数据
             this.categoryDate = { ...this.categoryDate }
             console.log(this.categoryDate[index])
-
-          //  data, date
+            this._getCategoryDetail('pop')
+            this._getCategoryDetail('new')
+            this._getCategoryDetail('sell')
           })
         },
         /**
@@ -99,8 +114,9 @@
          * @private
          */
         _getCategoryDetail(type) {
-          const miniWallKey = this.category[this.currentIndex].miniWallKey
-          getCategoryDetail(miniWallKey, type).then(res => {
+          const miniWallkey = this.category[this.currentIndex].miniWallkey
+          getCategoryDetail(miniWallkey, type).then(res => {
+            console.log(res)
             this.categoryDate[this.currentIndex].categoryDetail[type] = res
             this.categoryDate = {...this.categoryDate}
           })
@@ -109,7 +125,21 @@
           this._getSubCategory(index)
         },
         imageLoad() {
-          this.$refs.scrollName.refreshMethods()
+          debounce(this.$refs.scrollName.refreshMethods(), 500)
+        },
+        tabClick(index) {
+          switch (index) {
+            case 0:
+              this.currentType = 'pop'
+                  break
+            case 1:
+              this.currentType ='new'
+                  break
+            case 2:
+              this.currentType = 'sell'
+                  break
+          }
+
         }
       },
 

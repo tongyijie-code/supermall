@@ -3,7 +3,7 @@
       <img :src="showImage" alt="" @load="imageLoad">
       <div class="good-info">
         <p>{{goodsItem.title}}</p>
-        <span class="price">{{goodsItem.price}}</span>
+        <span class="price">￥{{goodsItem.price}}</span>
         <span class="collect">{{goodsItem.cfav}}</span>
       </div>
     </div>
@@ -26,7 +26,14 @@
     },
     computed: {
       showImage() {
-        return this.goodsItem.show ? this.goodsItem.show.img : this.goodsItem.image
+        // return this.goodsItem.show ? this.goodsItem.show.img : this.goodsItem.image
+        if (this.goodsItem.show) {
+          return this.goodsItem.show.img
+        }else if (this.goodsItem.image) {
+          return this.goodsItem.image
+        }else {
+          return this.goodsItem.img
+        }
       }
     },
     methods: {

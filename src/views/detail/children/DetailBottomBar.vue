@@ -76,10 +76,10 @@
 }
   .bar-right {
     line-height: 58px;
-    font-size: 18px;
+    font-size: 16px;
     color: #fff;
   }
   .cart {
-    background-color: goldenrod;
+    background-color: lightsalmon;
   }
 </style>
