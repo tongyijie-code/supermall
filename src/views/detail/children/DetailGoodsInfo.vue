@@ -1,6 +1,7 @@
 <template>
   <div v-if="Object.keys(detailInfo).length>0" class="info">
 <!--    描述-->
+    {{detailInfo}}
     <div class="info-desc">
       <div class="start"></div>
       <div class="desc">
@@ -41,9 +42,12 @@
           }
       },
       watch: {
-          detailInfo() {
+        detailInfo: {
+          immediate: true,
+          handler() {
             this.imgLength = this.detailInfo.detailImage[0].list.length
           }
+        }
       }
     }
 </script>
