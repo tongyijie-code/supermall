@@ -34,7 +34,8 @@
             }, 0).toFixed(2)
           },
         checkLength() {
-           return this.$store.state.cartList.filter( item => item.checked) .length
+           // return this.$store.state.cartList.filter( item => item.checked) .length
+           return this.$store.state.cartList.filter( item => item.checked) .reduce((pre,value)=> {return pre + value.count}, 0)
         },
         isSelected(){
             if (this.$store.state.cartList.length === 0) return false
