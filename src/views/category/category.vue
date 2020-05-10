@@ -13,7 +13,7 @@
       </div>
       <div class="scroll-box">
         <tab-control
-          v-show="isTabFixed"
+          v-show="isTabFixed && !loading"
           class="isFixed"
           :titles="['流行', '新款', '热卖']"
           @tabClick="typeClick"
@@ -125,6 +125,7 @@
         _getSubCategory(index) {
           return new Promise((resolve) => {
             this.currentIndex = index
+            // this.isTabFixed= false
             const maitKey = this.category[index].maitKey
 
             getSubCategory(maitKey).then(res => {

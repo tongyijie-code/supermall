@@ -1,24 +1,12 @@
 <template>
   <tab-bar v-show="showMenu">
-    <tab-bar-item path="/home">
-      <img slot="item-icon" src="~assets/img/tabbar/home.svg" alt="">
-      <img slot="item-icon-active" src="~assets/img/tabbar/home_active.svg" alt="">
-      <div slot="item-text">首页</div>
-    </tab-bar-item>
-    <tab-bar-item path="/category">
-      <img slot="item-icon" src="~assets/img/tabbar/category.svg" alt="">
-      <img slot="item-icon-active" src="~assets/img/tabbar/category_active.svg" alt="">
-      <div slot="item-text">分类</div>
-    </tab-bar-item>
-    <tab-bar-item path="/cart">
-      <img slot="item-icon" src="~assets/img/tabbar/shopcart.svg" alt="">
-      <img slot="item-icon-active" src="~assets/img/tabbar/shopcart_active.svg" alt="">
-      <div slot="item-text">购物车</div>
-    </tab-bar-item>
-    <tab-bar-item path="/profile">
-      <img slot="item-icon" src="~assets/img/tabbar/profile.svg" alt="">
-      <img slot="item-icon-active" src="~assets/img/tabbar/profile_active.svg" alt="">
-      <div slot="item-text">我的</div>
+    <tab-bar-item
+      v-for="menu in menuList"
+      :key="menu.path"
+      :path="menu.path">
+      <img slot="item-icon" :src="menu.icon" alt="">
+      <img slot="item-icon-active" :src="menu.activeIcon" alt="">
+      <div slot="item-text">{{ menu.name }}</div>
     </tab-bar-item>
   </tab-bar>
 </template>
@@ -26,6 +14,14 @@
 <script>
   import TabBar from 'components/common/tabbar/TabBar'
   import TabBarItem from 'components/common/tabbar/TabBarItem'
+  import homeIcon from 'assets/img/tabbar/home.svg'
+  import homeIconActive from 'assets/img/tabbar/home_active.svg'
+  import categoryIcon from 'assets/img/tabbar/category.svg'
+  import categoryIconActive from 'assets/img/tabbar/category_active.svg'
+  import shopcartIcon from 'assets/img/tabbar/shopcart.svg'
+  import shopcartIconActive from 'assets/img/tabbar/shopcart_active.svg'
+  import profileIcon from 'assets/img/tabbar/profile.svg'
+  import profileIconActive from 'assets/img/tabbar/profile_active.svg'
 
   export default {
     name: "MainTabBar",
@@ -35,7 +31,13 @@
     },
     data() {
       return {
-        showMenuPathList: ['/home', '/category', '/cart', '/profile']
+        showMenuPathList: ['/home', '/category', '/cart', '/profile'],
+        menuList: [
+          { name: '首页', path: '/home', icon: homeIcon, activeIcon: homeIconActive},
+          { name: '分类', path: '/category', icon: categoryIcon, activeIcon: categoryIconActive},
+          { name: '购物车', path: '/cart', icon: shopcartIcon, activeIcon: shopcartIconActive},
+          { name: '我的', path: '/profile', icon: profileIcon, activeIcon: profileIconActive}
+        ]
       }
     },
     computed: {

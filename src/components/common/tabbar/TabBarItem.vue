@@ -30,6 +30,7 @@
             }
         },
         computed: {
+            //判断当前路径是否包含父组件传过来的props路径
             isActive() {
                 return this.$route.path.includes(this.path)
             },
