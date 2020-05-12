@@ -1,15 +1,15 @@
 <template>
-    <scroll ref="scrollName" class="tab-menu">
-      <div class="menu-list">
-        <div class="menu-item"
-             :class="{active: currentIndex===index}"
-             v-for="(item, index) in category"
-             :key="index"
-             @click="itemClick(index)">
-          <div>{{item.title}}</div>
+      <scroll class="tab-menu">
+        <div class="menu-list">
+          <div class="menu-item"
+               :class="{active: currentIndex===index}"
+               v-for="(item, index) in category"
+               :key="index"
+               @click="itemClick(index)">
+            {{item.title}}
+          </div>
         </div>
-      </div>
-    </scroll>
+      </scroll>
 </template>
 
 <script>

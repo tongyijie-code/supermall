@@ -7,14 +7,15 @@ import 'vant/lib/index.css'
 
 //导入store
 import store from './store/index'
-
+//导入所有过滤函数，
 import * as filters from './filters'
 
 //导入图片懒加载
 import VueLazyload from "vue-lazyload";
 
-Object.keys(filters).forEach(key => {
-  Vue.filter(key, filters[key])
+//filters过滤函数名字组成的对象,Object.keys(filters)返回对象属性组成的对象
+Object.keys(filters).forEach(keyName => {
+  Vue.filter(keyName, filters[keyName])  //注册过滤函数
 })
 
 Vue.use(Swipe);

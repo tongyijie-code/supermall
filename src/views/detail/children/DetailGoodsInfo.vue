@@ -40,7 +40,7 @@
       },
       methods: {
         imgLoad() {
-          console.log(this.imgLength)
+          // console.log(this.imgLength)
           if (++this.counter === this.detailInfoLength) {
             this.$emit('imageLoad')
           }

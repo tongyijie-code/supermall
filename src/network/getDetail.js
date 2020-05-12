@@ -43,7 +43,10 @@ export class GoodsParem {
     //images可能没有值
     this.image = info.image? info.image: ''
     this.infos = info.set;
-    this.sizes = rule.tables;
+    if (rule){
+      this.sizes = rule.tables;
+    }
+
   }
 }
 

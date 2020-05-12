@@ -5,12 +5,14 @@
     </nav-bar>
 
     <div class="content">
+      <!--左侧导航-->
       <div class="menu">
         <tab-menu
           :category="category"
           @selectItem="selectItem">
         </tab-menu>
       </div>
+      <!--右侧内容-->
       <div class="scroll-box">
         <tab-control
           v-show="isTabFixed && !loading"
@@ -172,7 +174,7 @@
           })
         },
         imageLoad() {
-          debounce(this.$refs.scrollName.refreshMethods(), 500)
+          debounce(this.$refs.scrollName.refreshMethods, 500)
         },
         tabClick(index) {
           switch (index) {
@@ -189,7 +191,7 @@
 
         },
         categoryScroll(position) {
-          this.tabY = this.$refs.tabControl.$el.offsetTop
+          this.tabY = this.$refs.tabControl && this.$refs.tabControl.$el.offsetTop
           this.isTabFixed = -position.y >= this.tabY;
         },
         //点击tab栏同步

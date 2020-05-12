@@ -23,7 +23,7 @@
             type: Boolean,
             default: false
           },
-        
+
         },
         data() {
           return {
@@ -52,7 +52,7 @@
           })
         },
       methods: {
-          scrollTo(x, y, time) {
+          scrollTo(x, y, time=300) {
             this.scroll && this.scroll.scrollTo(x, y, time)
           },
           refreshMethods() {

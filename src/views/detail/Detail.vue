@@ -146,19 +146,16 @@
             this.comment = date.rate.list[0]
           }
 
-          console.log('debounce上面')
           this.getThemeTopY = debounce(() => {
-            console.log('success')
             this.themeTopYs = [];
             this.themeTopYs.push(0);
             this.themeTopYs.push(this.$refs.param.$el.offsetTop);
-            this.themeTopYs.push(this.$refs.comment.$el.offsetTop);
+            this.themeTopYs.push(this.$refs.comment.$el.offsetTop)
             this.themeTopYs.push(this.$refs.recommend.$el.offsetTop);
             this.themeTopYs.push(Number.MAX_VALUE)
-            console.log(this.themeTopYs)
           },200)
         });
-        // console.log('success')
+
         // 获取推荐数据
         getRecommend().then(res => {
           this.recommends = res.data.list

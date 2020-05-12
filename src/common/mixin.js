@@ -16,10 +16,4 @@ export const itemListenerMixin = {
       this.itemImageListener
     )
   },
-
-  methods: {
-    refreshContentHeight() {
-
-    }
-  }
 }
