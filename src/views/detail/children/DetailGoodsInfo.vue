@@ -40,26 +40,12 @@
       },
       methods: {
         imgLoad() {
-          // console.log(this.imgLength)
+          // this.$emit('imageLoad')
           if (++this.counter === this.detailInfoLength) {
             this.$emit('imageLoad')
           }
         }
-      },
-      // imgLoad() {
-      //   console.log(this.imgLength)
-      //   if (++this.counter === this.imgLength) {
-      //     this.$emit('imageLoad')
-      //   }
-      // }
-      // watch: {
-      //   detailInfo: {
-      //     immediate: true,
-      //     handler() {
-      //       this.imgLength = this.detailInfo.detailImage[0].list.length
-      //     }
-      //   }
-      // }
+      }
     }
 </script>
 

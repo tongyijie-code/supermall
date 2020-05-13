@@ -120,9 +120,9 @@ export default {
     // })
 
   },
-  destroyed() {
-    console.log('2222')
-  },
+  // destroyed() {
+  //   console.log('2222')
+  // },
   activated() {
     this.$refs.scrollName.scroll.refresh()
     this.$refs.scrollName.scrollTo(0, this.saveY, 0)
@@ -166,8 +166,6 @@ export default {
     //上拉加载更多哦
     loadMore() {
       this.GetGoodsDataMethod(this.currentType)
-
-      this.$refs.scrollName.scroll.finishPullUp()
     },
     swiperLoad() {
       // console.log(this.$refs.tabControl.$el.offsetTop)
@@ -191,10 +189,10 @@ export default {
         this.goods[type].list.push(...res.data.list);
         this.goods[type].page += 1 //直接等于page也行
         // console.log(this.goods[type].list)
-        //监听图片加载完，获取到图片高度后，重新计算一下可滚动区域
-        this.$refs.scrollName.scroll.refresh()
-      //请求过数据。结束加载结束，以便下一次使用
-      //   this.$refs.scrollName.scroll.finishPullUp()
+        // 刷新界面
+        this.$refs.scrollName.refreshMethods()
+        //获取数据后，结束上拉加载
+        this.$refs.scrollName.scroll.finishPullUp()
       })
     },
   },

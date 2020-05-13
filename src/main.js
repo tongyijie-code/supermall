@@ -11,7 +11,7 @@ import store from './store/index'
 import * as filters from './filters'
 
 //导入图片懒加载
-import VueLazyload from "vue-lazyload";
+import VUELazyload from "vue-lazyload";
 
 //filters过滤函数名字组成的对象,Object.keys(filters)返回对象属性组成的对象
 Object.keys(filters).forEach(keyName => {
@@ -29,7 +29,9 @@ Vue.use(Skeleton);
 Vue.use(Loading);
 Vue.use(Button);
 
-Vue.use(VueLazyload)
+Vue.use(VUELazyload, {
+  loading: require('@/assets/img/common/placeholder.png')
+})
 
 import dayjs from 'dayjs'
 

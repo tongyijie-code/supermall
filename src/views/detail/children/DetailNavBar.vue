@@ -37,7 +37,7 @@
             this.$emit('titleClick', index)
           },
         back() {
-            this.$router.back(-1)
+            this.$router.back()
         }
       }
     }

@@ -145,15 +145,6 @@
           if (date.rate.cRate !== 0) {
             this.comment = date.rate.list[0]
           }
-
-          this.getThemeTopY = debounce(() => {
-            this.themeTopYs = [];
-            this.themeTopYs.push(0);
-            this.themeTopYs.push(this.$refs.param.$el.offsetTop);
-            this.themeTopYs.push(this.$refs.comment.$el.offsetTop)
-            this.themeTopYs.push(this.$refs.recommend.$el.offsetTop);
-            this.themeTopYs.push(Number.MAX_VALUE)
-          },200)
         });
 
         // 获取推荐数据
@@ -161,9 +152,20 @@
           this.recommends = res.data.list
           // console.log(this.recommends)
         })
+        //给数组赋值，防抖（这是create后，就创建的函数）
+        this.getThemeTopY = debounce(() => {
+          this.themeTopYs = [];
+          this.themeTopYs.push(0);
+          this.themeTopYs.push(this.$refs.param.$el.offsetTop);
+          this.themeTopYs.push(this.$refs.comment.$el.offsetTop)
+          this.themeTopYs.push(this.$refs.recommend.$el.offsetTop);
+          this.themeTopYs.push(Number.MAX_VALUE)
+        },200)
       },
       imageLoad() {
-        this.newRefresh()
+        //全部图片加载完毕后，刷新界面
+        // this.newRefresh()实时监听用这个防抖函数刷新
+        this.$refs.scrollName.refreshMethods()
         this.getThemeTopY()
       },
       titleClick(index) {

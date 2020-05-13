@@ -41,15 +41,19 @@
 
           // 滚动到0,0位置    // this.scroll.scrollTo(0,0)
           // 监听滚动位置
-          this.scroll.on('scroll', position => {
-            this.$emit('scroll', position)
-          })
+          if (this.probeType === 2 || this.probeType === 3){
+            this.scroll.on('scroll', position => {
+              this.$emit('scroll', position)
+            })
+          }
 
           // 上拉加载更多
-          this.scroll.on('pullingUp', () => {
-            console.log('上拉加载')
-            this.$emit('pullingUp')
-          })
+          if (this.pullUpLoad) {
+            this.scroll.on('pullingUp', () => {
+              // console.log('上拉加载')
+              this.$emit('pullingUp')
+            })
+          }
         },
       methods: {
           scrollTo(x, y, time=300) {
@@ -59,6 +63,7 @@
             // console.log('------')
             this.scroll && this.scroll.refresh()
           },
+
           getScrollY() {
             return this.scroll ? this.scroll.y: 0
           }

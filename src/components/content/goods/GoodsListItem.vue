@@ -1,6 +1,6 @@
 <template>
     <div v-if="Object.keys(goodsItem).length>0" class="goodsItem" @click="itemClick">
-      <img :src="showImage" alt="" @load="imageLoad">
+      <img v-lazy="showImage" alt="" @load="imageLoad">
       <div class="good-info">
         <p>{{goodsItem.title}}</p>
         <span class="price">￥{{goodsItem.price}}</span>
@@ -47,7 +47,6 @@
       },
       itemClick() {
         this.$router.push('/detail/' + this.goodsItem[this.goodsIdName])
-
         // this.$router.push({
         //   path: '/detail',
         //   query: {}
